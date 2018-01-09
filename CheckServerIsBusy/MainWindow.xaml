@@ -1,0 +1,55 @@
+﻿<Window x:Class="CheckServerIsBusy.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:tb="http://www.hardcodet.net/taskbar"
+        mc:Ignorable="d"
+        Title="Check server is used by user" 
+        Height="350" Width="525" Loaded="Window_Loaded" Closing="Window_Closing" 
+        StateChanged="Window_StateChanged"
+        MinHeight="350" MinWidth="525">
+    <Window.Resources>
+        <ContextMenu x:Key="NotifierContextMenu" Placement="MousePoint">
+            <MenuItem Header="Send message" Click="TaskbarIcon_TrayLeftMouseDown"/>
+            <MenuItem Header="Exit" Click="MIExit_Click"/>
+        </ContextMenu>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"  />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <tb:TaskbarIcon Name="TBIMain" IconSource="/Icons/Sync.ico" ToolTipText="Sync..." 
+                        TrayLeftMouseDown="TaskbarIcon_TrayLeftMouseDown"
+                        TrayRightMouseDown="TBIMain_TrayRightMouseDown"/>
+        <Menu Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+            <MenuItem Header="File">
+                <MenuItem Header="Exit" Name="MIExit" Click="MIExit_Click"/>
+            </MenuItem>
+            <MenuItem Header="Edit">
+                <MenuItem Header="Preferences" Name="MIPreferences" Click="MIPreferences_Click"/>
+            </MenuItem>
+        </Menu>
+        <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,10,0,0">
+            <TextBox  Height="20"
+                 Text="Please, let me login to the server" x:Name="TbMessage" TextWrapping="Wrap" />
+            <Label  x:Name="LblResult" VerticalAlignment="Top" Height="38"/>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,10,0,0">
+            <Button  Name="BtnSendMessage" Content="Send message to the server"  Click="BtnSendMessage_Click" />
+        </StackPanel>
+
+        <StatusBar Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Height="20" 
+                   VerticalAlignment="Bottom" HorizontalContentAlignment="Right">
+            <StatusBarItem >
+                <TextBlock Name="TbServerIsBusyStatus"/>
+            </StatusBarItem>
+        </StatusBar>
+    </Grid>
+</Window>
